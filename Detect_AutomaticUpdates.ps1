@@ -116,6 +116,44 @@ Function Test-RegKeyIfExistWithValue {
     
 }
 
+Function Confirm-WUfB {
+    param ()
+
+    $message = ""
+
+    try {
+
+        $WUfB = $(New-Object -ComObject "Microsoft.Update.ServiceManager").Services | Where-Object {$_.Name -eq "Microsoft Update"} | Select-Object Name, IsDefaultAUService
+        
+    }
+    catch {
+
+        $message = "Error while trying to confirm WUfB as default"
+    
+    }
+
+    if ($WufB.IsDefaultAUService) {
+
+        $message += "Windows Update for Business is configured as default for Automatic Updates"
+        $result = 0
+    }
+    else {
+
+        $message += "WARNING: Windows Update Not Confirmed as default"
+        $result = 1
+    }
+
+    Write-Host $message
+
+    if ($result -eq 0) {
+        Return $true
+    }
+    else {
+        Return $false
+    }
+    
+}
+
 #Endregion Functions
 
 #Region Main
@@ -153,9 +191,11 @@ $detectSummary += $testAuResult.summary
 $testWuResult = Test-RegKeyIfExistWithValue $wuProperties $wuValue
 $detectSummary += $testWuResult.summary
 
-#Add PSVersion details
-$detectSummary += "PS Ver.= $psVer. "
+# Verify if WUfB is default and document it.
+if (Confirm-WUfB) {$detectSummary += "WUfB = Yes. "}
 
+# Add PSVersion details
+$detectSummary += "PS Ver.= $psVer. "
 
 #New lines, easier to read Agentexecutor Log file.
 Write-Host "`n`n"
