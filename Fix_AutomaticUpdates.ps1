@@ -148,15 +148,14 @@ Function Update-RegKeyIfExistToValue {
     
 }
 
-function Find-AUupdates {
+Function Find-AUupdates {
     param ()
 
-    $objAU = New-Object -ComObject Microsoft.Update.AutoUpdate
     try {
     
-        # Detect any available updates
-        $objAU.DetectNow()  
-        
+        # Detect any available updates 
+        UsoClient StartInteractiveScan
+
         $message = "Successfully executed Automatic Updates detection. "
         Write-Host $message
     
