@@ -50,6 +50,7 @@ $error.Clear()
 $result = 0
 $message = ""
 $detectSummary = ""
+$psVer = "$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor).$($PSVersionTable.PSVersion.Build).$($PSVersionTable.PSVersion.Revision)"
 
 #New lines, easier to read Agentexecutor Log file.
 Write-Host "`n`n"
@@ -146,6 +147,9 @@ $detectSummary += $testAuResult.summary
 # Since we are already here, lets audit some Windows Update Registry keys.
 $testWuResult = Test-RegKeyIfExistWithValue $wuProperties $wuValue
 $detectSummary += $testWuResult.summary
+
+#Add PSVersion details
+$detectSummary += "PS Ver.= $psVer. "
 
 
 #New lines, easier to read Agentexecutor Log file.

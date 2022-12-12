@@ -50,6 +50,7 @@
 $error.Clear()
 $message = ""
 $detectSummary = ""
+$psVer = "$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor).$($PSVersionTable.PSVersion.Build).$($PSVersionTable.PSVersion.Revision)"
 
 #New lines, easier to find and read in Agentexecutor Log file.
 Write-Host "`n`n"
@@ -202,6 +203,8 @@ else {
     #Check for updates
     $detectSummary += Find-AUupdates
 
+    #Add PSVersion details
+    $detectSummary += "PS Ver.= $psVer. "
 }
 
 #New lines, easier to find and read Agentexecutor Log file.
