@@ -76,7 +76,7 @@ Function Test-RegKeyIfExistWithValue {
     
         $regPath = $regName | Split-Path -Parent
         $regProperty = $regName | Split-Path -Leaf
-        $regExists = (Get-ItemProperty -LiteralPath $regPath).PSObject.Properties.Name -contains $regProperty
+        $regExists = (Get-ItemProperty -LiteralPath $regPath -ErrorAction SilentlyContinue).PSObject.Properties.Name -contains $regProperty
 
         if (!$regExists) {
 
@@ -92,7 +92,7 @@ Function Test-RegKeyIfExistWithValue {
             # Found! verify/compare value to $regValue
 
             # Before modifying get info of current value 
-            $regCurrentValue = Get-ItemPropertyValue -LiteralPath $regPath -Name $regProperty
+            $regCurrentValue = Get-ItemPropertyValue -LiteralPath $regPath -Name $regProperty -ErrorAction SilentlyContinue
 
             $message = "Found ""$regProperty"" = $regCurrentValue. "
 
