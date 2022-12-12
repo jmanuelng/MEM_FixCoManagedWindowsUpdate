@@ -50,7 +50,8 @@
 $error.Clear()
 $message = ""
 $detectSummary = ""
-$psVer = "$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor).$($PSVersionTable.PSVersion.Build).$($PSVersionTable.PSVersion.Revision)"
+$psV = $PSVersionTable.PSVersion
+$psVer = "$($psV.Major).$($psV.Minor).$($psV.Build).$($psV.Revision)"
 
 #New lines, easier to find and read in Agentexecutor Log file.
 Write-Host "`n`n"

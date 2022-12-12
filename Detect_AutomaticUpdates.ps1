@@ -50,7 +50,8 @@ $error.Clear()
 $result = 0
 $message = ""
 $detectSummary = ""
-$psVer = "$($PSVersionTable.PSVersion.Major).$($PSVersionTable.PSVersion.Minor).$($PSVersionTable.PSVersion.Build).$($PSVersionTable.PSVersion.Revision)"
+$psV = $PSVersionTable.PSVersion
+$psVer = "$($psV.Major).$($psV.Minor).$($psV.Build).$($psV.Revision)"
 
 #New lines, easier to read Agentexecutor Log file.
 Write-Host "`n`n"
@@ -120,13 +121,17 @@ Function Test-RegKeyIfExistWithValue {
 #Region Main
 
 $auPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU"
-$auName = @("$auPath\NoAutoUpdate")
-$auValue = 1
-
 $wuPath = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
+
+$verifyNames = @(
+    "$auPath\NoAutoUpdate",
+    "$wuPath\DisableDualScan"
+)
+$verifyValue = 1
+
+
 $wuProperties = @(
     "$wuPath\DoNotConnectToWindowsUpdateInternetLocations",
-    "$wuPath\DisableDualScan",
     "$wuPath\SetPolicyDrivenUpdateSourceForDriverUpdates",
     "$wuPath\SetPolicyDrivenUpdateSourceForOtherUpdates",
     "$wuPath\SetPolicyDrivenUpdateSourceForQualityUpdates",
@@ -140,7 +145,7 @@ $wuProperties = @(
 $wuValue = 9 #just a random number, only interested in documenting current values.
 
 # Verify if NoAutoUpdate = 1. Not good if it is.
-$testAuResult = Test-RegKeyIfExistWithValue $auName $auValue
+$testAuResult = Test-RegKeyIfExistWithValue $verifyNames $verifyValue
 $result = $testAuResult.keyHasValue
 $detectSummary += $testAuResult.summary
 
