@@ -163,6 +163,7 @@ $wuPath = "HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate"
 
 $verifyNames = @(
     "$auPath\NoAutoUpdate",
+    "$auPath\UseWUServer",
     "$wuPath\DisableDualScan"
 )
 $verifyValue = 1
@@ -177,8 +178,7 @@ $wuProperties = @(
     "$wuPath\WUServer",
     "$wuPath\TargetGroup",
     "$wuPath\WUStatusServer",
-    "$wuPath\TargetGroupEnable",
-    "$auPath\UseWUServer"
+    "$wuPath\TargetGroupEnable"
 )
 $wuValue = 9 #just a random number, only interested in documenting current values.
 

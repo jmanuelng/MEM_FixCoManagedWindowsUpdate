@@ -193,7 +193,8 @@ else {
         "$wuPath\SetPolicyDrivenUpdateSourceForOtherUpdates",
         "$wuPath\SetPolicyDrivenUpdateSourceForQualityUpdates",
         "$wuPath\DisableWindowsUpdateAccess",
-        "$auPath\NoAutoUpdate"
+        "$auPath\NoAutoUpdate",
+        "$auPath\UseWUServer"
     )
     $regPropertyType = "DWORD"
     $regPropertyValue = 0
